@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_invoice_out_form" model="ir.ui.view">
+        <field name="name">pos_invoice_out_form</field>
+        <field name="model">pos.invoice.out</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Pay provider invoice">
+                <group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="invoice_id" class="oe_inline" domain="[('company_id', '=', company_id), ('state', '=', 'open'), ('type', 'in', ['in_invoice', 'out_refund'])]"/>
+                    <field name="amount" class="oe_inline"/>
+                </group>
+                <footer>
+                    <button name="run" string="Pay invoice" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+            id="action_pos_invoice_out"
+            name="Pay invoice"
+            res_model="pos.invoice.out"
+            src_model="pos.session"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+        />
+</odoo>
